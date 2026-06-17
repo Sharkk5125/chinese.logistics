@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汉语物流词汇 · Từ Vựng Logistics</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hanzi-writer/3.5.0/hanzi-writer.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --red:    #C0392B;
+    --red-dk: #922B21;
+    --red-lt: #F5B7B1;
+    --gold:   #D4AC0D;
+    --ink:    #1A1A2E;
+    --ink-60: #5A5A78;
+    --ink-20: #E8E8F0;
+    --paper:  #FAF8F4;
+    --white:  #FFFFFF;
+    --green:  #1E8449;
+    --green-lt:#D5F5E3;
+    --wrong:  #C0392B;
+    --wrong-lt:#FDECEA;
+    --shadow: 0 4px 24px rgba(26,26,46,0.10);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--white);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-hanzi {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px; color: var(--gold);
+    line-height: 1;
+  }
+  .logo-text { font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
+  .logo-sub  { font-size: 11px; color: #aaa; font-weight: 300; }
+
+  /* ── NAV TABS ── */
+  nav {
+    display: flex;
+    background: var(--white);
+    border-bottom: 2px solid var(--ink-20);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 1; min-width: 110px;
+    padding: 14px 8px;
+    text-align: center;
+    font-size: 13px; font-weight: 600;
+    color: var(--ink-60);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .tab:hover  { color: var(--red); background: #fef9f9; }
+  .tab.active { color: var(--red); border-bottom-color: var(--red); background: var(--white); }
+  .tab-icon   { font-size: 18px; display: block; margin-bottom: 2px; }
+
+  /* ── SECTIONS ── */
+  section { display: none; padding: 28px 20px; max-width: 860px; margin: 0 auto; }
+  section.active { display: block; }
+
+  /* ── IMPORT PANEL ── */
+  .import-bar {
+    background: var(--white);
+    border: 2px dashed var(--ink-20);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .import-bar label {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red); color: var(--white);
+    padding: 9px 18px; border-radius: 8px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .import-bar label:hover { background: var(--red-dk); }
+  .import-bar input[type=file] { display: none; }
+  .import-status { font-size: 13px; color: var(--ink-60); flex: 1; }
+  .import-status strong { color: var(--green); }
+
+  /* ── WORD LIST ── */
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .word-card-mini {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border-left: 4px solid var(--red);
+  }
+  .word-card-mini:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.13); }
+  .word-card-mini .hanzi { font-family: 'Noto Serif SC', serif; font-size: 26px; color: var(--red); }
+  .word-card-mini .pinyin { font-size: 13px; color: var(--ink-60); margin: 2px 0; }
+  .word-card-mini .meaning { font-size: 13px; font-weight: 500; color: var(--ink); }
+  .word-card-mini .category { font-size: 10px; color: var(--ink-60); margin-top: 4px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+
+  .search-bar {
+    display: flex; gap: 10px; margin-bottom: 20px;
+  }
+  .search-bar input {
+    flex: 1;
+    padding: 10px 16px;
+    border: 2px solid var(--ink-20);
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-bar input:focus { border-color: var(--red); }
+  .filter-select {
+    padding: 10px 14px;
+    border: 2px solid var(--ink-20);
+    border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    background: var(--white);
+    cursor: pointer; outline: none;
+  }
+  .filter-select:focus { border-color: var(--red); }
+
+  /* ── FLASHCARD ── */
+  .fc-meta {
+    text-align: center;
+    font-size: 13px; color: var(--ink-60);
+    margin-bottom: 20px;
+  }
+  .fc-meta span { font-weight: 700; color: var(--ink); }
+
+  .fc-scene {
+    perspective: 1200px;
+    width: 100%; max-width: 480px;
+    height: 280px;
+    margin: 0 auto 28px;
+    cursor: pointer;
+  }
+  .fc-inner {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+  }
+  .fc-inner.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute; width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 28px;
+  }
+  .fc-front {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dk) 100%);
+    color: var(--white);
+  }
+  .fc-back {
+    background: var(--white);
+    transform: rotateY(180deg);
+  }
+  .fc-hanzi { font-family: 'Noto Serif SC', serif; font-size: 72px; line-height: 1; }
+  .fc-pinyin-big { font-size: 22px; margin-top: 10px; opacity: 0.85; letter-spacing: 1px; }
+  .fc-back-hanzi { font-family: 'Noto Serif SC', serif; font-size: 48px; color: var(--red); }
+  .fc-back-pinyin { font-size: 16px; color: var(--ink-60); margin: 6px 0; }
+  .fc-back-mean   { font-size: 18px; font-weight: 700; color: var(--ink); text-align: center; }
+  .fc-back-exam   { font-size: 13px; color: var(--ink-60); margin-top: 10px; text-align: center; font-style: italic; }
+  .fc-hint { text-align: center; font-size: 12px; color: var(--ink-60); margin-bottom: 12px; }
+
+  .fc-controls {
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 11px 24px;
+    border-radius: 10px;
+    border: none; cursor: pointer;
+    font-size: 14px; font-weight: 600;
+    transition: all 0.18s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary { background: var(--red); color: var(--white); }
+  .btn-primary:hover { background: var(--red-dk); transform: translateY(-1px); }
+  .btn-outline {
+    background: var(--white); color: var(--ink);
+    border: 2px solid var(--ink-20);
+  }
+  .btn-outline:hover { border-color: var(--red); color: var(--red); }
+  .btn-sm { padding: 8px 16px; font-size: 12px; }
+  .btn-green { background: var(--green); color: var(--white); }
+  .btn-green:hover { background: #156036; }
+
+  .fc-progress {
+    height: 6px; background: var(--ink-20);
+    border-radius: 99px; margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .fc-progress-fill {
+    height: 100%; background: var(--red);
+    border-radius: 99px;
+    transition: width 0.3s;
+  }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: linear-gradient(135deg, var(--ink) 0%, #2C3E6A 100%);
+    color: var(--white);
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-align: center;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .quiz-q .q-hanzi { font-family: 'Noto Serif SC', serif; font-size: 68px; }
+  .quiz-q .q-pinyin { font-size: 16px; opacity: 0.7; margin-top: 6px; letter-spacing: 1px; }
+  .quiz-q .q-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
+
+  .quiz-type-toggle {
+    display: flex; gap: 8px; margin-bottom: 20px; justify-content: center;
+  }
+  .quiz-type-btn {
+    padding: 7px 16px;
+    border-radius: 8px;
+    border: 2px solid var(--ink-20);
+    background: var(--white);
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    transition: all 0.15s;
+    color: var(--ink-60);
+  }
+  .quiz-type-btn.active { background: var(--red); color: var(--white); border-color: var(--red); }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .quiz-opt {
+    background: var(--white);
+    border: 2px solid var(--ink-20);
+    border-radius: 12px;
+    padding: 16px 18px;
+    cursor: pointer;
+    font-size: 15px; font-weight: 500;
+    transition: all 0.18s;
+    text-align: left;
+    font-family: inherit;
+    color: var(--ink);
+  }
+  .quiz-opt:hover:not(:disabled) { border-color: var(--red); color: var(--red); background: #fef5f5; }
+  .quiz-opt.correct { background: var(--green-lt); border-color: var(--green); color: var(--green); }
+  .quiz-opt.wrong   { background: var(--wrong-lt); border-color: var(--wrong); color: var(--wrong); }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-opt .opt-hanzi { font-family: 'Noto Serif SC', serif; font-size: 20px; display: block; }
+  .quiz-opt .opt-pin   { font-size: 11px; color: var(--ink-60); }
+
+  .quiz-score-bar {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--white); border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .score-pill {
+    padding: 4px 12px; border-radius: 99px;
+    font-size: 12px; font-weight: 700;
+  }
+  .score-right { background: var(--green-lt); color: var(--green); }
+  .score-wrong { background: var(--wrong-lt); color: var(--wrong); }
+  .score-total { color: var(--ink-60); font-size: 13px; }
+  .quiz-feedback {
+    text-align: center; font-size: 15px; font-weight: 600;
+    margin-bottom: 16px; min-height: 24px;
+  }
+  .quiz-result-box {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .quiz-result-box .big-score {
+    font-size: 64px; font-weight: 700; color: var(--red);
+    line-height: 1;
+  }
+  .quiz-result-box p { color: var(--ink-60); margin-top: 8px; font-size: 15px; }
+
+  /* ── STROKE ANIMATION ── */
+  .stroke-wrap {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 20px;
+  }
+  .stroke-search {
+    display: flex; gap: 10px; width: 100%; max-width: 400px;
+  }
+  .stroke-search input {
+    flex: 1; padding: 10px 16px;
+    border: 2px solid var(--ink-20); border-radius: 10px;
+    font-size: 16px; outline: none; font-family: 'Noto Serif SC', serif;
+  }
+  .stroke-search input:focus { border-color: var(--red); }
+  #stroke-canvas-wrap {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+    position: relative;
+  }
+  #stroke-canvas { display: block; }
+  .stroke-grid-overlay {
+    position: absolute; top: 20px; left: 20px;
+    pointer-events: none;
+  }
+  .stroke-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .stroke-info { text-align: center; }
+  .stroke-info .s-hanzi { font-family: 'Noto Serif SC', serif; font-size: 36px; color: var(--red); }
+  .stroke-info .s-pin   { font-size: 15px; color: var(--ink-60); }
+  .stroke-info .s-mean  { font-size: 16px; font-weight: 600; color: var(--ink); }
+
+  .char-picker {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    max-width: 620px;
+  }
+  .char-chip {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; color: var(--ink);
+    background: var(--white);
+    border: 2px solid var(--ink-20);
+    border-radius: 10px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .char-chip:hover { border-color: var(--red); color: var(--red); }
+  .char-chip.active { background: var(--red); color: var(--white); border-color: var(--red); }
+
+  /* ── AUDIO BUTTON ── */
+  .audio-btn {
+    background: transparent;
+    border: none; cursor: pointer;
+    font-size: 20px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background 0.15s;
+    color: var(--white);
+    display: inline-flex; align-items: center;
+  }
+  .audio-btn:hover { background: rgba(255,255,255,0.15); }
+  .audio-btn.dark { color: var(--red); }
+  .audio-btn.dark:hover { background: var(--red-lt); }
+
+  /* ── EMPTY STATE ── */
+  .empty { text-align: center; padding: 60px 20px; color: var(--ink-60); }
+  .empty-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty h3 { font-size: 18px; color: var(--ink); margin-bottom: 8px; }
+  .empty p  { font-size: 14px; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 500px; width: 90%;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .modal h2 { font-size: 20px; margin-bottom: 16px; color: var(--ink); }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--ink-20); border: none; border-radius: 50%;
+    width: 32px; height: 32px; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: var(--red-lt); color: var(--red); }
+  .modal .fc-hanzi { font-size: 56px; }
+
+  /* ── UTILS ── */
+  .badge {
+    display: inline-block; padding: 3px 10px;
+    border-radius: 99px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-red  { background: var(--red-lt); color: var(--red-dk); }
+  .badge-gold { background: #FEF9C3; color: #92400E; }
+
+  .section-title {
+    font-size: 20px; font-weight: 700; color: var(--ink);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-sub { font-size: 13px; color: var(--ink-60); margin-bottom: 20px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 520px) {
+    .quiz-options { grid-template-columns: 1fr; }
+    .fc-hanzi { font-size: 54px; }
+    .quiz-q .q-hanzi { font-size: 52px; }
+  }
+
+  /* ── AUDIO INDICATOR ── */
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .speaking { animation: pulse 0.8s infinite; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-hanzi">物</div>
+    <div>
+      <div class="logo-text">Từ Vựng Logistics</div>
+      <div class="logo-sub">汉语物流词汇学习</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <span id="header-count" style="font-size:12px;color:#aaa;"></span>
+  </div>
+</header>
+
+<nav>
+  <div class="tab active" onclick="switchTab('list')">
+    <span class="tab-icon">📚</span>Danh Sách
+  </div>
+  <div class="tab" onclick="switchTab('flashcard')">
+    <span class="tab-icon">🃏</span>Flashcard
+  </div>
+  <div class="tab" onclick="switchTab('quiz')">
+    <span class="tab-icon">✏️</span>Trắc Nghiệm
+  </div>
+  <div class="tab" onclick="switchTab('stroke')">
+    <span class="tab-icon">✍️</span>Viết Chữ
+  </div>
+</nav>
+
+<!-- ════════════════════════ LIST ════════════════════════ -->
+<section id="sec-list" class="active">
+  <div class="import-bar">
+    <label for="pdf-upload">📂 Tải PDF lên</label>
+    <input type="file" id="pdf-upload" accept=".pdf,.csv,.txt,.json">
+    <div class="import-status" id="import-status">
+      Hoặc dùng <strong>50 từ vựng logistics</strong> có sẵn bên dưới
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+    <div>
+      <div class="section-title">📖 Từ Vựng</div>
+      <div class="section-sub">Bấm vào thẻ để nghe phát âm và xem chi tiết</div>
+    </div>
+    <span class="badge badge-red" id="word-count">50 từ</span>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="search-input" placeholder="Tìm theo Hán tự, pinyin hoặc nghĩa…" oninput="renderList()">
+    <select class="filter-select" id="cat-filter" onchange="renderList()">
+      <option value="">Tất cả chủ đề</option>
+    </select>
+  </div>
+
+  <div class="word-grid" id="word-grid"></div>
+</section>
+
+<!-- ════════════════════════ FLASHCARD ════════════════════════ -->
+<section id="sec-flashcard">
+  <div class="section-title">🃏 Flashcard</div>
+  <div class="section-sub">Bấm vào thẻ để lật — học theo thứ tự hoặc ngẫu nhiên</div>
+
+  <div class="fc-progress">
+    <div class="fc-progress-fill" id="fc-bar" style="width:0%"></div>
+  </div>
+  <div class="fc-meta">Thẻ <span id="fc-current">1</span> / <span id="fc-total">50</span></div>
+
+  <div class="fc-scene" onclick="flipCard()">
+    <div class="fc-inner" id="fc-inner">
+      <div class="fc-face fc-front">
+        <div class="fc-hanzi" id="fc-hanzi">物流</div>
+        <div class="fc-pinyin-big" id="fc-pinyin">wùliú</div>
+        <button class="audio-btn" onclick="event.stopPropagation();speak(currentCard().hanzi)" title="Phát âm">🔊</button>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-back-hanzi" id="fc-b-hanzi">物流</div>
+        <div class="fc-back-pinyin" id="fc-b-pinyin">wùliú</div>
+        <div class="fc-back-mean"  id="fc-b-mean">Logistics / Vận chuyển hàng hóa</div>
+        <div class="fc-back-exam"  id="fc-b-exam"></div>
+        <button class="audio-btn dark" style="margin-top:10px;" onclick="speak(currentCard().hanzi)" title="Phát âm">🔊</button>
+      </div>
+    </div>
+  </div>
+  <div class="fc-hint">👆 Bấm vào thẻ để lật</div>
+
+  <div class="fc-controls">
+    <button class="btn btn-outline" onclick="fcNav(-1)">← Trước</button>
+    <button class="btn btn-outline btn-sm" onclick="shuffleFC()">🔀 Ngẫu nhiên</button>
+    <button class="btn btn-outline btn-sm" onclick="resetFC()">↺ Lại đầu</button>
+    <button class="btn btn-primary" onclick="fcNav(1)">Sau →</button>
+  </div>
+</section>
+
+<!-- ════════════════════════ QUIZ ════════════════════════ -->
+<section id="sec-quiz">
+  <div class="section-title">✏️ Trắc Nghiệm</div>
+  <div class="section-sub">4 lựa chọn — bấm để chọn đáp án đúng</div>
+
+  <div class="quiz-score-bar">
+    <span class="score-pill score-right">✓ <span id="q-right">0</span></span>
+    <span class="score-pill score-wrong">✗ <span id="q-wrong">0</span></span>
+    <span class="score-total">Đã trả lời <span id="q-done">0</span> / <span id="q-ttl">50</span> câu</span>
+    <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="resetQuiz()">↺ Làm lại</button>
+  </div>
+
+  <div class="quiz-type-toggle">
+    <button class="quiz-type-btn active" onclick="setQType('cn2vi',this)">🇨🇳→🇻🇳 Hán → Nghĩa</button>
+    <button class="quiz-type-btn" onclick="setQType('vi2cn',this)">🇻🇳→🇨🇳 Nghĩa → Hán</button>
+    <button class="quiz-type-btn" onclick="setQType('pin2cn',this)">🔤→🇨🇳 Pinyin → Hán</button>
+  </div>
+
+  <div id="quiz-area">
+    <div class="quiz-q" id="quiz-q-box">
+      <div class="q-label" id="q-label">CHỌN NGHĨA TIẾNG VIỆT</div>
+      <div class="q-hanzi" id="q-hanzi">物流</div>
+      <div class="q-pinyin" id="q-pinyin">wùliú</div>
+      <button class="audio-btn" onclick="speak(quizWord.hanzi)" style="margin-top:8px;" title="Phát âm">🔊</button>
+    </div>
+    <div class="quiz-feedback" id="q-feedback"></div>
+    <div class="quiz-options" id="quiz-opts"></div>
+    <div style="text-align:center;">
+      <button class="btn btn-primary" id="q-next-btn" onclick="nextQuestion()" style="display:none;">Câu tiếp theo →</button>
+    </div>
+  </div>
+
+  <div id="quiz-result" style="display:none;">
+    <div class="quiz-result-box">
+      <div class="big-score" id="result-score">0%</div>
+      <p id="result-msg">Hoàn thành!</p>
+      <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;">
+        <button class="btn btn-primary" onclick="resetQuiz()">🔄 Làm lại</button>
+        <button class="btn btn-outline" onclick="switchTab('flashcard')">📖 Ôn Flashcard</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ STROKE ════════════════════════ -->
+<section id="sec-stroke">
+  <div class="section-title">✍️ Nét Chữ</div>
+  <div class="section-sub">Xem hoạt họa nét bút — HanziWriter</div>
+
+  <div class="stroke-wrap">
+    <div class="stroke-search">
+      <input type="text" id="stroke-input" placeholder="Nhập chữ Hán…" maxlength="1" style="text-align:center;font-size:24px;">
+      <button class="btn btn-primary" onclick="loadStroke()">Xem</button>
+    </div>
+
+    <div class="char-picker" id="char-picker"></div>
+
+    <div id="stroke-canvas-wrap">
+      <svg id="stroke-canvas" width="280" height="280"></svg>
+    </div>
+
+    <div class="stroke-info" id="stroke-info"></div>
+
+    <div class="stroke-btns">
+      <button class="btn btn-primary" onclick="animateStrokes()">▶ Xem nét vẽ</button>
+      <button class="btn btn-outline" onclick="quizStrokes()">✏️ Luyện viết</button>
+      <button class="btn btn-outline btn-sm" onclick="hzWriter&&hzWriter.loopCharacterAnimation()">🔁 Lặp lại</button>
+      <button class="btn btn-outline btn-sm" onclick="hzWriter&&hzWriter.cancelAnimation()">⏹ Dừng</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── WORD DETAIL MODAL ── -->
+<div class="modal-overlay" id="word-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+      <div class="fc-hanzi" id="m-hanzi" style="color:var(--red);font-family:'Noto Serif SC',serif;font-size:56px;"></div>
+      <div>
+        <div style="font-size:16px;color:var(--ink-60);" id="m-pinyin"></div>
+        <div style="font-size:20px;font-weight:700;margin-top:4px;" id="m-mean"></div>
+        <button class="btn btn-primary btn-sm" style="margin-top:8px;" onclick="speak(document.getElementById('m-hanzi').textContent)">🔊 Phát âm</button>
+      </div>
+    </div>
+    <div style="background:var(--paper);border-radius:10px;padding:14px;" id="m-detail"></div>
+    <div style="margin-top:14px;display:flex;gap:8px;">
+      <button class="btn btn-outline btn-sm" onclick="loadStrokeFor(document.getElementById('m-hanzi').textContent[0]);switchTab('stroke')">✍️ Xem nét</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════
+//  DATA — 50 từ vựng Logistics tiếng Trung
+// ════════════════════════════════════════════════════════════
+let WORDS = [
+  // Vận chuyển & Giao thông
+  {hanzi:"物流",pinyin:"wùliú",meaning:"Logistics / Chuỗi cung ứng vận tải",category:"Vận chuyển",example:"这家公司专注于物流服务。"},
+  {hanzi:"货运",pinyin:"huòyùn",meaning:"Vận chuyển hàng hóa",category:"Vận chuyển",example:"货运公司提供全国服务。"},
+  {hanzi:"运输",pinyin:"yùnshū",meaning:"Vận tải / Chuyên chở",category:"Vận chuyển",example:"陆路运输成本较低。"},
+  {hanzi:"快递",pinyin:"kuàidì",meaning:"Chuyển phát nhanh / Giao hàng nhanh",category:"Vận chuyển",example:"快递明天就能到。"},
+  {hanzi:"配送",pinyin:"pèisòng",meaning:"Phân phối / Giao hàng đến tay người nhận",category:"Vận chuyển",example:"最后一公里配送很重要。"},
+  {hanzi:"发货",pinyin:"fāhuò",meaning:"Xuất hàng / Gửi hàng đi",category:"Vận chuyển",example:"订单已经发货了。"},
+  {hanzi:"收货",pinyin:"shōuhuò",meaning:"Nhận hàng",category:"Vận chuyển",example:"请在此签字收货。"},
+  {hanzi:"装卸",pinyin:"zhuāngxiè",meaning:"Bốc dỡ hàng hóa",category:"Vận chuyển",example:"装卸工人正在卸货。"},
+  {hanzi:"航运",pinyin:"hángyùn",meaning:"Vận tải đường biển / Hàng hải",category:"Vận chuyển",example:"国际航运需要报关。"},
+  {hanzi:"空运",pinyin:"kōngyùn",meaning:"Vận chuyển hàng không",category:"Vận chuyển",example:"空运速度快但费用高。"},
+  {hanzi:"海运",pinyin:"hǎiyùn",meaning:"Vận chuyển đường biển",category:"Vận chuyển",example:"海运适合大批量货物。"},
+  {hanzi:"陆运",pinyin:"lùyùn",meaning:"Vận chuyển đường bộ",category:"Vận chuyển",example:"陆运可以门到门服务。"},
+  // Kho bãi
+  {hanzi:"仓库",pinyin:"cāngkù",meaning:"Kho hàng / Nhà kho",category:"Kho bãi",example:"仓库温度需要保持恒定。"},
+  {hanzi:"储存",pinyin:"chǔcún",meaning:"Lưu kho / Bảo quản",category:"Kho bãi",example:"冷链储存成本较高。"},
+  {hanzi:"库存",pinyin:"kùcún",meaning:"Tồn kho / Hàng tồn",category:"Kho bãi",example:"库存管理影响运营成本。"},
+  {hanzi:"入库",pinyin:"rùkù",meaning:"Nhập kho",category:"Kho bãi",example:"新货今天入库。"},
+  {hanzi:"出库",pinyin:"chūkù",meaning:"Xuất kho",category:"Kho bãi",example:"出库需要扫描条码。"},
+  {hanzi:"盘点",pinyin:"pándiǎn",meaning:"Kiểm kê hàng hóa",category:"Kho bãi",example:"每月进行一次盘点。"},
+  {hanzi:"货架",pinyin:"huòjià",meaning:"Giá đỡ hàng / Kệ hàng",category:"Kho bãi",example:"货架上的货物要整齐摆放。"},
+  {hanzi:"叉车",pinyin:"chāchē",meaning:"Xe nâng hàng",category:"Kho bãi",example:"叉车司机需要持证上岗。"},
+  // Đơn hàng & Hợp đồng
+  {hanzi:"订单",pinyin:"dìngdān",meaning:"Đơn đặt hàng",category:"Đơn hàng",example:"客户下了一个大订单。"},
+  {hanzi:"合同",pinyin:"hétong",meaning:"Hợp đồng",category:"Đơn hàng",example:"请签署合同后发货。"},
+  {hanzi:"提单",pinyin:"tídān",meaning:"Vận đơn (Bill of Lading)",category:"Đơn hàng",example:"提单是货物所有权凭证。"},
+  {hanzi:"报价",pinyin:"bàojià",meaning:"Báo giá",category:"Đơn hàng",example:"请提供最新报价单。"},
+  {hanzi:"发票",pinyin:"fāpiào",meaning:"Hóa đơn",category:"Đơn hàng",example:"需要增值税发票。"},
+  {hanzi:"保险",pinyin:"bǎoxiǎn",meaning:"Bảo hiểm hàng hóa",category:"Đơn hàng",example:"货物需要投保运输保险。"},
+  {hanzi:"索赔",pinyin:"suǒpéi",meaning:"Khiếu nại / Đòi bồi thường",category:"Đơn hàng",example:"货物损坏可以向承运人索赔。"},
+  // Hải quan & Xuất nhập khẩu
+  {hanzi:"报关",pinyin:"bàoguān",meaning:"Khai báo hải quan",category:"Hải quan",example:"进口货物需要报关。"},
+  {hanzi:"关税",pinyin:"guānshuì",meaning:"Thuế hải quan",category:"Hải quan",example:"关税影响进口成本。"},
+  {hanzi:"清关",pinyin:"qīngguān",meaning:"Thông quan hàng hóa",category:"Hải quan",example:"清关手续需要三天。"},
+  {hanzi:"出口",pinyin:"chūkǒu",meaning:"Xuất khẩu",category:"Hải quan",example:"这批货物用于出口。"},
+  {hanzi:"进口",pinyin:"jìnkǒu",meaning:"Nhập khẩu",category:"Hải quan",example:"进口商品需要检验。"},
+  {hanzi:"原产地",pinyin:"yuánchǎndì",meaning:"Xuất xứ hàng hóa",category:"Hải quan",example:"原产地证明很重要。"},
+  {hanzi:"检验",pinyin:"jiǎnyàn",meaning:"Kiểm tra / Kiểm định",category:"Hải quan",example:"商品出口前需要检验。"},
+  // Đóng gói & Hàng hóa
+  {hanzi:"包装",pinyin:"bāozhuāng",meaning:"Đóng gói / Bao bì",category:"Đóng gói",example:"包装需要符合国际标准。"},
+  {hanzi:"货物",pinyin:"huòwù",meaning:"Hàng hóa",category:"Đóng gói",example:"货物安全到达目的地。"},
+  {hanzi:"集装箱",pinyin:"jízhuāngxiāng",meaning:"Container / Công-ten-nơ",category:"Đóng gói",example:"一个标准集装箱可装20吨。"},
+  {hanzi:"托盘",pinyin:"tuōpán",meaning:"Pallet / Tấm kê hàng",category:"Đóng gói",example:"货物放在托盘上运输。"},
+  {hanzi:"重量",pinyin:"zhòngliàng",meaning:"Trọng lượng / Cân nặng",category:"Đóng gói",example:"请填写货物实际重量。"},
+  {hanzi:"体积",pinyin:"tǐjī",meaning:"Thể tích / Kích thước",category:"Đóng gói",example:"体积重量超过实际重量。"},
+  // Quản lý & Dịch vụ
+  {hanzi:"供应链",pinyin:"gōngyìngliàn",meaning:"Chuỗi cung ứng",category:"Quản lý",example:"优化供应链可以降低成本。"},
+  {hanzi:"跟踪",pinyin:"gēnzōng",meaning:"Theo dõi / Giám sát lộ trình",category:"Quản lý",example:"可以在线跟踪包裹。"},
+  {hanzi:"延误",pinyin:"yánwù",meaning:"Chậm trễ / Trì hoãn",category:"Quản lý",example:"天气原因导致延误。"},
+  {hanzi:"时效",pinyin:"shíxiào",meaning:"Thời hạn giao hàng / Hiệu lực",category:"Quản lý",example:"快递时效是两天。"},
+  {hanzi:"运费",pinyin:"yùnfèi",meaning:"Cước vận chuyển / Phí vận chuyển",category:"Quản lý",example:"运费由买方承担。"},
+  {hanzi:"承运人",pinyin:"chéngyùnrén",meaning:"Người vận chuyển / Nhà vận tải",category:"Quản lý",example:"承运人对货物负责。"},
+  {hanzi:"货代",pinyin:"huòdài",meaning:"Đại lý vận chuyển / Forwarder",category:"Quản lý",example:"货代帮助安排国际运输。"},
+  {hanzi:"分拣",pinyin:"fēnjiǎn",meaning:"Phân loại hàng hóa",category:"Quản lý",example:"自动分拣系统效率高。"},
+  {hanzi:"损耗",pinyin:"sǔnhào",meaning:"Hao hụt / Mất mát trong vận chuyển",category:"Quản lý",example:"运输中要减少损耗。"},
+  {hanzi:"回单",pinyin:"huídān",meaning:"Phiếu xác nhận giao hàng / Biên lai",category:"Quản lý",example:"请保留回单作为凭证。"},
+];
+
+// ════════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════════
+let fcIndex = 0;
+let fcOrder = [];
+let quizWord = null;
+let quizType = 'cn2vi';
+let quizRight = 0, quizWrong = 0, quizDone = 0;
+let quizPool = [];
+let hzWriter = null;
+let currentStrokeChar = '';
+
+// ════════════════════════════════════════════════════════════
+//  TAB NAVIGATION
+// ════════════════════════════════════════════════════════════
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach((t,i)=>{
+    const ids = ['list','flashcard','quiz','stroke'];
+    t.classList.toggle('active', ids[i]===id);
+  });
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  if (id==='flashcard') initFC();
+  if (id==='quiz') initQuiz();
+  if (id==='stroke') initStroke();
+}
+
+// ════════════════════════════════════════════════════════════
+//  AUDIO — Web Speech API
+// ════════════════════════════════════════════════════════════
+function speak(text) {
+  if (!text) return;
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'zh-CN';
+  utt.rate = 0.85;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utt);
+}
+
+// ════════════════════════════════════════════════════════════
+//  PDF / FILE IMPORT
+// ════════════════════════════════════════════════════════════
+document.getElementById('pdf-upload').addEventListener('change', async function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const status = document.getElementById('import-status');
+  status.innerHTML = `⏳ Đang xử lý <strong>${file.name}</strong>…`;
+
+  if (file.name.endsWith('.json')) {
+    const text = await file.text();
+    try {
+      const data = JSON.parse(text);
+      if (Array.isArray(data)) {
+        WORDS = data;
+        afterImport(file.name);
+      }
+    } catch { status.innerHTML = '❌ JSON không hợp lệ.'; }
+    return;
+  }
+
+  if (file.name.endsWith('.csv') || file.name.endsWith('.txt')) {
+    const text = await file.text();
+    const lines = text.split('\n').filter(l=>l.trim());
+    const parsed = [];
+    for (const line of lines) {
+      const parts = line.split(/[,\t|]/).map(s=>s.trim());
+      if (parts.length >= 3) {
+        parsed.push({
+          hanzi:   parts[0],
+          pinyin:  parts[1],
+          meaning: parts[2],
+          category: parts[3] || 'Từ vựng',
+          example:  parts[4] || ''
+        });
+      }
+    }
+    if (parsed.length > 0) { WORDS = parsed; afterImport(file.name); }
+    else status.innerHTML = '❌ Không đọc được dữ liệu. Định dạng: Hán tự, pinyin, nghĩa';
+    return;
+  }
+
+  if (file.name.endsWith('.pdf')) {
+    // Hướng dẫn người dùng cách dùng PDF
+    status.innerHTML = `
+      ℹ️ File PDF <strong>${file.name}</strong> cần xử lý bên ngoài. Hãy xuất danh sách từ vựng sang CSV
+      (<code>汉字,pinyin,nghĩa,chủ đề</code>) rồi tải lên — hoặc nhắn Claude để tôi trích xuất giúp.
+    `;
+    return;
+  }
+
+  status.innerHTML = '❌ Định dạng không hỗ trợ. Dùng CSV, TXT, hoặc JSON.';
+});
+
+function afterImport(name) {
+  const status = document.getElementById('import-status');
+  status.innerHTML = `✅ Đã tải <strong>${WORDS.length} từ</strong> từ <strong>${name}</strong>`;
+  fcOrder = [];
+  renderList();
+  updateHeaderCount();
+}
+
+// ════════════════════════════════════════════════════════════
+//  WORD LIST
+// ════════════════════════════════════════════════════════════
+function renderList() {
+  const q  = (document.getElementById('search-input').value||'').toLowerCase();
+  const cat= document.getElementById('cat-filter').value;
+
+  // Update categories
+  const cats = [...new Set(WORDS.map(w=>w.category))];
+  const sel = document.getElementById('cat-filter');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">Tất cả chủ đề</option>' +
+    cats.map(c=>`<option value="${c}" ${c===cur?'selected':''}>${c}</option>`).join('');
+
+  const filtered = WORDS.filter(w => {
+    const hit = !q || w.hanzi.includes(q) || w.pinyin.toLowerCase().includes(q)
+                    || w.meaning.toLowerCase().includes(q);
+    const catOk = !cat || w.category === cat;
+    return hit && catOk;
+  });
+
+  document.getElementById('word-count').textContent = `${filtered.length} từ`;
+  const grid = document.getElementById('word-grid');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <div class="empty-icon">🔍</div>
+      <h3>Không tìm thấy từ nào</h3>
+      <p>Thử tìm bằng từ khác</p>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((w,i) => `
+    <div class="word-card-mini" onclick="openModal(${WORDS.indexOf(w)})" title="Bấm để xem chi tiết">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div class="hanzi">${w.hanzi}</div>
+        <button class="audio-btn dark" style="font-size:16px;padding:2px 6px;"
+          onclick="event.stopPropagation();speak('${w.hanzi.replace(/'/g,"\\'")}')">🔊</button>
+      </div>
+      <div class="pinyin">${w.pinyin}</div>
+      <div class="meaning">${w.meaning}</div>
+      <div class="category">${w.category}</div>
+    </div>
+  `).join('');
+}
+
+function openModal(idx) {
+  const w = WORDS[idx];
+  document.getElementById('m-hanzi').textContent  = w.hanzi;
+  document.getElementById('m-pinyin').textContent = w.pinyin;
+  document.getElementById('m-mean').textContent   = w.meaning;
+  document.getElementById('m-detail').innerHTML   = `
+    <div style="margin-bottom:10px;">
+      <span class="badge badge-red">${w.category}</span>
+    </div>
+    ${w.example ? `
+    <div style="margin-top:8px;">
+      <div style="font-size:11px;font-weight:700;color:var(--ink-60);letter-spacing:1px;margin-bottom:4px;">VÍ DỤ</div>
+      <div style="font-family:'Noto Serif SC',serif;font-size:15px;color:var(--ink);line-height:1.6;">${w.example}</div>
+    </div>` : ''}
+    <div style="margin-top:12px;font-size:12px;color:var(--ink-60);">
+      Bấm <strong>✍️ Xem nét</strong> để học viết chữ này
+    </div>
+  `;
+  document.getElementById('word-modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('word-modal').classList.remove('open');
+}
+document.getElementById('word-modal').addEventListener('click', function(e){
+  if (e.target === this) closeModal();
+});
+
+// ════════════════════════════════════════════════════════════
+//  FLASHCARD
+// ════════════════════════════════════════════════════════════
+function initFC() {
+  if (fcOrder.length === 0) resetFC();
+  updateFC();
+}
+function resetFC() {
+  fcOrder = WORDS.map((_,i)=>i);
+  fcIndex = 0;
+  document.getElementById('fc-inner').classList.remove('flipped');
+  updateFC();
+}
+function shuffleFC() {
+  fcOrder = WORDS.map((_,i)=>i).sort(()=>Math.random()-0.5);
+  fcIndex = 0;
+  document.getElementById('fc-inner').classList.remove('flipped');
+  updateFC();
+}
+function currentCard() { return WORDS[fcOrder[fcIndex]]; }
+function updateFC() {
+  const w = currentCard();
+  document.getElementById('fc-hanzi').textContent   = w.hanzi;
+  document.getElementById('fc-pinyin').textContent  = w.pinyin;
+  document.getElementById('fc-b-hanzi').textContent = w.hanzi;
+  document.getElementById('fc-b-pinyin').textContent= w.pinyin;
+  document.getElementById('fc-b-mean').textContent  = w.meaning;
+  document.getElementById('fc-b-exam').textContent  = w.example || '';
+  document.getElementById('fc-inner').classList.remove('flipped');
+  document.getElementById('fc-current').textContent = fcIndex + 1;
+  document.getElementById('fc-total').textContent   = fcOrder.length;
+  const pct = ((fcIndex+1)/fcOrder.length*100).toFixed(0);
+  document.getElementById('fc-bar').style.width = pct + '%';
+}
+function flipCard() {
+  document.getElementById('fc-inner').classList.toggle('flipped');
+}
+function fcNav(dir) {
+  fcIndex = (fcIndex + dir + fcOrder.length) % fcOrder.length;
+  updateFC();
+}
+
+// ════════════════════════════════════════════════════════════
+//  QUIZ
+// ════════════════════════════════════════════════════════════
+function initQuiz() {
+  if (quizPool.length === 0) resetQuiz();
+}
+function resetQuiz() {
+  quizRight = 0; quizWrong = 0; quizDone = 0;
+  quizPool  = [...WORDS].sort(()=>Math.random()-0.5);
+  document.getElementById('quiz-area').style.display = '';
+  document.getElementById('quiz-result').style.display = 'none';
+  updateScorebar();
+  nextQuestion();
+}
+function setQType(type, btn) {
+  quizType = type;
+  document.querySelectorAll('.quiz-type-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  resetQuiz();
+}
+function updateScorebar() {
+  document.getElementById('q-right').textContent = quizRight;
+  document.getElementById('q-wrong').textContent = quizWrong;
+  document.getElementById('q-done').textContent  = quizDone;
+  document.getElementById('q-ttl').textContent   = quizPool.length + quizDone;
+}
+function nextQuestion() {
+  document.getElementById('q-next-btn').style.display = 'none';
+  document.getElementById('q-feedback').textContent = '';
+
+  if (quizPool.length === 0) {
+    showResult(); return;
+  }
+
+  quizWord = quizPool.shift();
+  const wrong = WORDS.filter(w=>w!==quizWord).sort(()=>Math.random()-0.5).slice(0,3);
+  const options = [...wrong, quizWord].sort(()=>Math.random()-0.5);
+
+  // Question display
+  let qHtml='', qPin='', qLabel='';
+  if (quizType==='cn2vi') {
+    qHtml  = quizWord.hanzi;
+    qPin   = quizWord.pinyin;
+    qLabel = 'CHỌN NGHĨA TIẾNG VIỆT';
+  } else if (quizType==='vi2cn') {
+    qHtml  = quizWord.meaning;
+    qPin   = '';
+    qLabel = 'CHỌN CHỮ HÁN ĐÚNG';
+  } else {
+    qHtml  = quizWord.pinyin;
+    qPin   = '';
+    qLabel = 'CHỌN CHỮ HÁN THEO PINYIN';
+  }
+
+  document.getElementById('q-label').textContent  = qLabel;
+  document.getElementById('q-hanzi').textContent  = qHtml;
+  document.getElementById('q-pinyin').textContent = qPin;
+  // Hide audio btn for vi2cn
+  document.querySelector('.quiz-q .audio-btn').style.display =
+    quizType!=='vi2cn' ? '' : 'none';
+
+  // Options
+  const optsDiv = document.getElementById('quiz-opts');
+  optsDiv.innerHTML = options.map((opt,i) => {
+    let label = '';
+    if (quizType==='cn2vi')   label = opt.meaning;
+    else if (quizType==='vi2cn')  label = `<span class="opt-hanzi">${opt.hanzi}</span><span class="opt-pin">${opt.pinyin}</span>`;
+    else                           label = `<span class="opt-hanzi">${opt.hanzi}</span><span class="opt-pin">${opt.meaning}</span>`;
+    return `<button class="quiz-opt" onclick="checkAnswer(this,'${opt.hanzi}')">${label}</button>`;
+  }).join('');
+}
+
+function checkAnswer(btn, hanzi) {
+  const correct = hanzi === quizWord.hanzi;
+  document.querySelectorAll('.quiz-opt').forEach(b => {
+    b.disabled = true;
+    const bHanzi = b.getAttribute('onclick').match(/'([^']+)'/)[1];
+    if (bHanzi === quizWord.hanzi) b.classList.add('correct');
+  });
+  if (correct) {
+    btn.classList.add('correct');
+    quizRight++;
+    document.getElementById('q-feedback').textContent = '✓ Chính xác! 太棒了！';
+    document.getElementById('q-feedback').style.color = 'var(--green)';
+  } else {
+    btn.classList.add('wrong');
+    quizWrong++;
+    document.getElementById('q-feedback').innerHTML =
+      `✗ Sai rồi — đáp án đúng: <strong>${quizWord.hanzi}</strong> (${quizWord.meaning})`;
+    document.getElementById('q-feedback').style.color = 'var(--wrong)';
+  }
+  quizDone++;
+  updateScorebar();
+  document.getElementById('q-next-btn').style.display = 'inline-flex';
+}
+
+function showResult() {
+  const total = quizRight + quizWrong;
+  const pct = total ? Math.round(quizRight/total*100) : 0;
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('quiz-result').style.display = '';
+  document.getElementById('result-score').textContent = pct + '%';
+  let msg = '';
+  if (pct >= 90) msg = '🏆 Xuất sắc! Bạn đã thành thạo bộ từ này!';
+  else if (pct >= 70) msg = '👏 Giỏi lắm! Ôn thêm một chút nữa nhé.';
+  else if (pct >= 50) msg = '📖 Cố lên! Hãy ôn lại flashcard.';
+  else msg = '💪 Đừng nản! Học lại từ flashcard và thử lại.';
+  document.getElementById('result-msg').textContent =
+    `Đúng ${quizRight}/${total} câu — ${msg}`;
+}
+
+// ════════════════════════════════════════════════════════════
+//  STROKE — HanziWriter
+// ════════════════════════════════════════════════════════════
+function initStroke() {
+  // Build char picker from first char of each word
+  const uniqueChars = [...new Set(WORDS.map(w=>w.hanzi[0]))].slice(0, 30);
+  const picker = document.getElementById('char-picker');
+  picker.innerHTML = uniqueChars.map(c =>
+    `<div class="char-chip" onclick="loadStrokeFor('${c}')">${c}</div>`
+  ).join('');
+
+  if (!currentStrokeChar && WORDS.length > 0) {
+    loadStrokeFor(WORDS[0].hanzi[0]);
+  }
+}
+
+function loadStroke() {
+  const val = document.getElementById('stroke-input').value.trim();
+  if (val) loadStrokeFor(val[0]);
+}
+
+function loadStrokeFor(char) {
+  currentStrokeChar = char;
+  document.getElementById('stroke-input').value = char;
+
+  // Update picker active state
+  document.querySelectorAll('.char-chip').forEach(c => {
+    c.classList.toggle('active', c.textContent === char);
+  });
+
+  // Update info
+  const match = WORDS.find(w => w.hanzi.includes(char));
+  const info = document.getElementById('stroke-info');
+  info.innerHTML = match ? `
+    <div class="s-hanzi">${char}</div>
+    <div class="s-pin">${match.pinyin.split(' ')[0] || match.pinyin}</div>
+    <div class="s-mean">${match.meaning}</div>
+  ` : `<div class="s-hanzi">${char}</div>`;
+
+  // Init HanziWriter
+  const svg = document.getElementById('stroke-canvas');
+  svg.innerHTML = '';
+
+  try {
+    hzWriter = HanziWriter.create('stroke-canvas', char, {
+      width: 280, height: 280,
+      padding: 16,
+      showOutline: true,
+      strokeColor: '#C0392B',
+      outlineColor: '#E8E8F0',
+      drawingColor: '#1A1A2E',
+      showCharacter: true,
+      renderer: 'svg',
+    });
+  } catch(e) {
+    svg.innerHTML = `<text x="140" y="160" text-anchor="middle"
+      font-size="120" font-family="Noto Serif SC,serif" fill="#C0392B">${char}</text>`;
+  }
+}
+
+function animateStrokes() {
+  if (hzWriter) hzWriter.animateCharacter();
+}
+function quizStrokes() {
+  if (hzWriter) hzWriter.quiz({
+    onComplete: function(data) {
+      alert(`✅ Hoàn thành! Số lần sai: ${data.totalMistakes}`);
+    }
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+//  UTILITIES
+// ════════════════════════════════════════════════════════════
+function updateHeaderCount() {
+  document.getElementById('header-count').textContent = WORDS.length + ' từ';
+}
+
+// ════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════
+(function init() {
+  renderList();
+  updateHeaderCount();
+  fcOrder = WORDS.map((_,i)=>i);
+})();
+</script>
+</body>
+</html>
